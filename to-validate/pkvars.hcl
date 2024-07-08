@@ -1,0 +1,6 @@
+memory     = "3096"
+disk_size  = "140440"
+username = "root"
+vm_name  = "odoo2-vm"
+password = "M1cr0c0m!"
+cpus = "4"
