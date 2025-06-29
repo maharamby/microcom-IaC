@@ -1,0 +1,31 @@
+# This is the resource that will trigger the packer image creation
+resource "terraform_data" "odoo1" {
+
+
+#provisioner "file" {
+#    source      = "files/config.ps1"
+#    destination = "c:/terraform/config.ps1"
+#  }
+
+  provisioner "remote-exec" {
+connection {
+    type     = "ssh"
+    user     = "Administateur"
+#    password = "lj97hf64!MS"
+    host     = "10.255.255.19"
+    port     = "22"
+#    private_key = file(/root/.ssh/id_rsa)
+    agent    = true
+    target_platform = "windows"
+    script_path = "c:/windows/temp/terraform_%RAND%.ps1"
+}
+
+    inline = [
+#      "echo hello"
+      "powershell -ExecutionPolicy Bypass c:\\Packer\\packer.ps1"
+    ]
+  }
+}
+
+
+

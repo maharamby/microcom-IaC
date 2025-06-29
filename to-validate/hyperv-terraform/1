@@ -1,0 +1,26 @@
+module "custom_webserver" {
+  source = "modules/packer_module"
+
+  builder_project_id = var.project_id
+  builder_region     = "europe-west3"
+  builder_zone       = "europe-west3-b"
+
+  source_image_family = "debian-11"
+  target_image_name   = "my-image"
+  target_image_family = "test"
+
+  builder_network_name = "random-tests"
+  builder_subnet_name = "random-frankfurt"
+}
+  
+resource "google_compute_instance" "vm_instance" {
+  name         = "webserver"
+  machine_type = "f1-micro"
+
+  tags = ["nginx-instance"]
+
+  boot_disk {
+    initialize_params {
+      image = module.custom_webserver.image_name
+    }
+  }
